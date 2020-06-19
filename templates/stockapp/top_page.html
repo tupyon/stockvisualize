@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block contents %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mt-5 border-bottom">
+    <h1 class="h2">Well come stockapp!!!</h1>
+</div>
+<style media="screen">
+    .skyblue{
+    background: skyblue;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    }
+    .pink{
+    background: pink;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    }
+</style>
+<body> 
+<div class="container" style="background: white;height: 100px;">
+    <h4>Latest Stock Value</h4>
+
+    <div class="input-group" style="background: white">
+        <div class="col-xs-2">
+
+
+
+            <form action='',method="GET" >
+            <input type="text" class="form-control" placeholder="Search Tiker">
+        </div>    
+            
+        <!--- 
+        <form action="" method="get">
+        <input name="query" value="{{ request.GET.query }}" type="text">
+        <button type="submit">検索する</button>
+        </form>
+        -->
+
+
+
+            <button type="input"  class="input-group-addon"><img class="glyphicon glyphicon-search" ></i>Search</button>
+            
+            <!---
+            <button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
+            --->
+        </form>
+    </div>
+
+
+
+    <div class="row" style="background:whitesmoke;">
+        
+        <div class="col-md-6" style="background:whitesmoke">    
+            <table class="table-striped"  width=500>
+                <tr>
+                    <th>TIKER</th>
+                    <th class="text-center">DATE</th>
+                    <th class="text-center">PRICE</th>
+                    <th class="text-right">PREVIOUS_DAY</th>
+                    <th class="text-right">CHANGE</th>
+                </tr><br>
+                {% for stock in upsidelist %}
+                <tr>
+                    <td>{{ stock.0 }}</td>
+                    <td>{{ stock.1 }}</td>
+                    <td class="text-right">{{ stock.2 }}</td>
+                    {% if stock.3 < 0 %}
+                        <td class="text-right"><span class="text-danger">{{ stock.3 }}</span></td>
+                    {% else %}
+                        <td class="text-right"><span class="text-success">{{ stock.3 }}</span></td>
+                    {% endif %}
+
+                    {% if stock.4 < 0 %}
+                        <td class="text-right"><span class="text-danger">{{ stock.4 }}%</span></td>
+                    {% else %}
+                        <td class="text-right"><span class="text-success">{{ stock.4 }}%</span></td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+        
+
+            <div class="row" style="background:whitesmoke;">
+        
+                    <div class="col-md-6" style="background:whitesmoke">    
+                        <table class="table-striped"  width=500>
+                            <tr>
+                                <th>TIKER</th>
+                                <th class="text-center">DATE</th>
+                                <th class="text-center">PRICE</th>
+                                <th class="text-right">PREVIOUS_DAY</th>
+                                <th class="text-right">CHANGE</th>
+                            </tr><br>
+                            {% for stock in downsidelist %}
+                            <tr>
+                                <td>{{ stock.0 }}</td>
+                                <td>{{ stock.1 }}</td>
+                                <td class="text-right">{{ stock.2 }}</td>
+                                {% if stock.3 < 0 %}
+                                    <td class="text-right"><span class="text-danger">{{ stock.3 }}</span></td>
+                                {% else %}
+                                    <td class="text-right"><span class="text-success">{{ stock.3 }}</span></td>
+                                {% endif %}
+            
+                                {% if stock.4 < 0 %}
+                                    <td class="text-right"><span class="text-danger">{{ stock.4 }}%</span></td>
+                                {% else %}
+                                    <td class="text-right"><span class="text-success">{{ stock.4 }}%</span></td>
+                                {% endif %}
+            
+                            </tr>
+                            {% endfor %}
+                            </table>
+                        </div>
+        
+        </div>
+
+
+
+
+
+
+
+</div>
+</div>
+<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>  
+
+</body>
+{% endblock %}

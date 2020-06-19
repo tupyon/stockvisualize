@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container" style="background: white;height: 100px;">
+<h4 >Search Ticker</h4>
+   
+   <div class="input-group" style="background: white">
+            <!---
+                <form action='',method="GET" >
+                <input type="text" class="form-control" placeholder="Search Tiker">                `
+                <button type="input"  class="input-group-addon"><img class="glyphicon glyphicon-search" ></i>Search</button>
+            -->    
+                
+        <div class="col-xs-2">
+            <form action="{% url  'stockapp:tickerdisplay' %}" method="get">
+                <input name="query" value="{{ request.GET.query }}" type="text" class="form-control" placeholder="Search Tiker">
+        </div>
+        <img class="glyphicon glyphicon-search" ></i><button type="input"  class="input-group-addon">Search</button>
+                
+                <!--<a class="icon-test"><i data-feather="search"></i></a><button type="input" >glyphicon-search</button> -->
+                
+                 
+            </form>
+        
+    
+                
+                <!---
+                <button type="button" class="btn btn-default btn-lg">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+                --->
+        
+        {% csrf_token %}        
+    </form>
+</div>
+
+{% endblock %}

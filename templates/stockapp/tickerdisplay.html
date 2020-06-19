@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block contents %}
+<body>
+<div class="container" style="background: white;height: 1000px;">
+
+    <div class="input-group" style="background: white">
+        <div class="col-xs-2">
+                <form action="{% url  'stockapp:tickerdisplay' %}" method="get">
+                    <input name="query" value="{{ request.GET.query }}" type="text" class="form-control" placeholder="Search Tiker">
+            </div>
+            <img class="glyphicon glyphicon-search" ></i><button type="input"  class="input-group-addon">Search</button>
+    </div>
+
+
+    <h4 class="mt-5 mb-4 border-bottom">CHART</h4>
+
+    <div style="width:1000px;height:500px">        
+    {% autoescape off %}
+    {{ plot_candle }}
+    {% endautoescape %}
+    </div>
+    
+    <div class="row" style="background:whitesmoke;"></div>
+    <h5 class="mt-5 mb-4 border-bottom">history</h5>
+
+    <ul id="historyTabs" class="nav nav-tabs">
+        <li role="tablist">
+            <a href="#intraday"  aria-controls="intraday" role="tab" data-toggle="tab" class="nav-link">intra-day</a>
+        </li>
+        <li role="tablist">
+            <a href="#daily" aria-controls="daily" role="tab" data-toggle="tab" class="nav-link  active">daily</a>
+        </li>
+        <li role="tablist">
+            <a href="#weekly" aria-controls="weekly" role="tab" data-toggle="tab" class="nav-link">weekly</a>
+        </li>
+        <li role="tablist">
+            <a href="#monthly" aria-controls="monthly" role="tab" data-toggle="tab" class="nav-link">monthly</a>
+        </li>
+    </ul>
+
+        
+    <div class="tab-content p-2 ">
+        <div role="tabpanel" class="tab-pane fade" id="intraday">
+            <div class="col-md-6" style="background:whitesmoke">    
+                <table class="table-striped"  width=1000>
+                    <tr>
+                        <th class="text-center">date</th>
+                        <th class="text-right">open</th>
+                        <th class="text-right">high</th>
+                        <th class="text-right">low</th>
+                        <th class="text-right">close</th>
+                        <th class="text-right">volume</th>
+
+                    </tr><br>
+                    {% for stock in intradata %}
+                    <tr>
+                        <td class="text-center">{{ stock.0 }}</td>
+                        <td class="text-right">{{ stock.1|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.2|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.3|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.4|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.5|floatformat:2 }}</td>
+                    {% empty %}
+                        <td>empty data</td>
+                    </tr><br>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane active fade show" id="daily">
+                <div class="col-md-6" style="background:whitesmoke">    
+                    <table class="table-striped"  width=1000>
+                        <tr>
+                            <th class="text-center">date</th>
+                            <th class="text-right">open</th>
+                            <th class="text-right">high</th>
+                            <th class="text-right">low</th>
+                            <th class="text-right">close</th>
+                            <th class="text-right">adjusted close</th>
+                            <th class="text-right">volume</th>
+                            <th class="text-right">dividend amount</th>
+                        </tr><br>
+                        {% for stock in detaildata %}
+                        <tr>
+                            <td class="text-center">{{ stock.0 }}</td>
+                            <td class="text-right">{{ stock.1|floatformat:2 }}</td>
+                            <td class="text-right">{{ stock.2|floatformat:2 }}</td>
+                            <td class="text-right">{{ stock.3|floatformat:2 }}</td>
+                            <td class="text-right">{{ stock.4|floatformat:2 }}</td>
+                            <td class="text-right">{{ stock.5|floatformat:2 }}</td>
+                            <td class="text-right">{{ stock.6 }}</td>
+                            <td class="text-right">{{ stock.7 }}</td>
+                        {% empty %}
+                            <td>empty data</td>
+                        </tr><br>
+                        {% endfor %}
+                    </table>
+                </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="weekly">
+            <div class="col-md-6" style="background:whitesmoke">    
+                <table class="table-striped"  width=1000>
+                    <tr>
+                        <th class="text-center">date</th>
+                        <th class="text-right">open</th>
+                        <th class="text-right">high</th>
+                        <th class="text-right">low</th>
+                        <th class="text-right">close</th>
+                        <th class="text-right">adjusted close</th>
+                        <th class="text-right">volume</th>
+                        <th class="text-right">dividend amount</th>
+                    </tr><br>
+                    {% for stock in weeklydata %}
+                    <tr>
+                        <td class="text-center">{{ stock.0 }}</td>
+                        <td class="text-right">{{ stock.1|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.2|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.3|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.4|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.5|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.6 }}</td>
+                        <td class="text-right">{{ stock.7 }}</td>
+                    {% empty %}
+                        <td>empty data</td>
+                    </tr><br>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="monthly">
+            <div class="col-md-6" style="background:whitesmoke">    
+                <table class="table-striped"  width=1000>
+                    <tr>
+                        <th class="text-center">date</th>
+                        <th class="text-right">open</th>
+                        <th class="text-right">high</th>
+                        <th class="text-right">low</th>
+                        <th class="text-right">close</th>
+                        <th class="text-right">adjusted close</th>
+                        <th class="text-right">volume</th>
+                        <th class="text-right">dividend amount</th>
+                    </tr><br>
+                    {% for stock in monthlydata %}
+                    <tr>
+                        <td class="text-center">{{ stock.0 }}</td>
+                        <td class="text-right">{{ stock.1|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.2|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.3|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.4|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.5|floatformat:2 }}</td>
+                        <td class="text-right">{{ stock.6 }}</td>
+                        <td class="text-right">{{ stock.7 }}</td>
+                    {% empty %}
+                        <td>empty data</td>
+                    </tr><br>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+</body>
+
+
+
+{% endblock %}
